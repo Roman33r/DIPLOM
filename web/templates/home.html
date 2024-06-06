@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!-- <img src="{% static 'images/home.jpg' %}" alt="" width="100%" height="500px" class="img-home">       -->
+
+
+
+
+<div class="mt-4 container-fluid d-flex align-items-center justify-content-center text-body-emphasis bg_lover">
+    <div class="p-4 mt-4 p-md-5 mb-4 rounded text-body-emphasis">
+        <div class="col-lg-6 px-0">
+            <h1 class="display-4 fst-italic text-danger">Агенство недвижимости ЭКСПЕРТ</h1>
+            <p class="lead text-primary">Наши цели совпадают!</p>
+            <button class="btn btn-outline-primary waves-effect" data-toggle="modal" data-target="#myModal"><i
+                    class="fa fa-file-text"></i> Бесплатная консультация</button>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="container mb-5">
+    <div class="mt-5  row text-center justify-content-center">
+        <h1><span class="text-primary">АН "ЭКСПЕРТ"</span></h1>
+        <h2 class="text-secondary text-danger">Более 5 лет успешной работы на рынке недвижимости!</h2>
+        <hr class="text-secondary">
+        <h4 class="text-secondary">Поможем купить, продать, снять, сдать недвижимость. Всю основную часть сделки берем на себя, Вам остается только взять с собой хорошее настроение!</h4>
+    </div>
+
+    <hr class="text-secondary mb-5">
+
+    <!-- Преимущества -->
+    <div class="row mt-4 justify-content-center">
+        <div class="ms-5 py-5 mt-3 col-lg-3 col-md-3 col-sm-12 rounded bg_card1">
+            <div class="row">
+                <div class="col-8">
+                    <h2>Полное сопровождение сделки</h2>
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/ves.png' %}" class="pb-2" width="50" height="50">
+                </div>
+            </div>
+            <hr class="col-8 text-secondary">
+            <div class="row"><div class="col-12"><p class="py-1">юридическое сопровождение, помощь при ипотечном кредитовании</p></div></div>
+            
+        </div>
+        <div class="ms-5 mt-3 py-5 col-md-3 col-sm-12 rounded bg_card1">
+            <div class="row">
+                <div class="col-8">
+                    <h2>Более 5 лет на рынке недвижимости</h2>
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/chas.png' %}" class="pb-2" width="50" height="50">
+                </div>
+            </div>
+            <hr class="col-8 text-secondary">
+            <p class="py-1">более 100 удачных сделок</p>
+        </div>
+        <div class="ms-5 mt-3 py-5 col-md-3 col-sm-12 rounded bg_card1">
+            <div class="row">
+                <div class="col-8">
+                    <h2>Работаем с материнским капиталом</h2>
+                </div>
+                <div class="col-3">
+                    <img src="{% static 'images/kolya.png' %}" class="pb-2" width="60" height="50">
+                </div>
+            </div>
+            <hr class="col-8 text-secondary">
+            <p class="py-1">Помогаем купить недвижимость с реализацией материнсокго капитала</p>
+        </div>
+        <hr class="text-secondary mt-5">
+        <div class="row justify-content-center">
+            <h2 class="text-center">НАШИ ПАРТНЕРЫ</h2>
+            <div class="col-lg-4 col-md-4 col-sm-6 text-center"><img src="{% static 'images/logo-sber.png' %}" width="250" height="200" alt=""></div>
+            <div class="col-lg-4 col-md-4 col-sm-6 text-center"><img src="{% static 'images/cian-logo.png' %}" width="250" height="200" alt=""></div>
+            <div class="col-lg-4 col-md-4 col-sm-6 text-center"><img src="{% static 'images/logo-sber.png' %}" width="250" height="200" alt=""></div>
+        </div>
+
+        <hr class="text-secondary mt-5">
+
+        <div class="row">
+            <h1>Контакты</h1>
+            <div class="col-5">
+                <p><b>КОЛЬЧУГИНО</b></p>
+                <p><i class="fa fa-map-marker"></i> Кольчугино, ул. Добровольского, д. 2б (ТЦ "Меркурий)"</p>
+                <p><i class="fa fa-phone"></i> 8(910)770-46-36</p>
+                <p><i class="fa fa-phone"></i> 8(910)770-77-77</p>
+                <p><i class="fa fa-envelope"></i> test@gmail.com</p>
+                <p><i class='fa fa-clock-o'></i> с 9:00 до 18:00 <span class="text-secondary">пн-пт</span></p>
+                <p><i class='fa fa-clock-o'></i> с 9:00 до 15:00 <span class="text-secondary">сб-вс</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

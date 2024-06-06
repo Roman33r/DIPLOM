@@ -1,0 +1,27 @@
+body{
+    height: 100%;
+    width: 100%;
+}
+
+
+
+footer{
+    /* position: fixed;
+    bottom: 0;
+    width: 100%; */
+}
+
+footer a{
+    text-decoration: none;
+}
+
+.bg_lover{
+    background-image: url("../images/back1.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.bg_card1{
+    background-color: #f0f0f0dc;
+}
