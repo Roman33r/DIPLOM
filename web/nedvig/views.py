@@ -7,3 +7,6 @@ def home(request):
 
 def catalog(request):
     return render(request, 'nedvig/catalog.html')
+
+def nedvig_page(request):
+    return render(request, 'nedvig/nedvig_page.html')

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<form action="" class="mt-5 container border rounded border-danger" method="POST">
+<form action="" class="mt-5 container border rounded border-secondary" method="POST">
     {% csrf_token %}
     <h1 class="text-center">Быстрый поиск недвижимости</h1>
     <div class="row justify-content-center mt-3">
@@ -43,7 +43,7 @@
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                <label class="form-check-label" for="inlineCheckbox3">5</label>
+                <label class="form-check-label" for="inlineCheckbox3">5+</label>
             </div>
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
@@ -77,6 +77,10 @@
             </select>
         </div>
     </div>
+    <div class="row justify-content-center ms-5 me-5 mb-4">
+            <input type="submit" value="Поиск" class="btn btn-secondary">
+    </div>
+
 </form>
 
 <div class="container mt-5">
