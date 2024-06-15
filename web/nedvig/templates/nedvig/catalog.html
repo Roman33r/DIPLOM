@@ -85,35 +85,36 @@
 
 <div class="container mt-5">
     <div class="row">
+        {% for nedvig in nedvig_list %}
         <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
-            <div class="card">
-                <a href="">
+            <div class="card">  
+                <a href="{% url 'nedvig_page' nedvig.id%}">
                     <div class="view overlay">
-                        <img class="card-img-top rounded-top" src="{% static 'images/back.jpg' %}" width="345"
-                            height="450" alt="Card image cap">
+                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="450" alt="Card image cap">
                         <a href="">
                             <div class="mask rgba-white-slight"></div>
                         </a>
-                    </div>
+                    </div> 
                     <div class="card-body rounded-bottom">
                         <a href="" class="link-object text-decoration-none text-dark">
-                            <h4 class="card-title">Продается 3-комн. квартира. Кольчугино, ул. Добровольского, д. 9</h4>
+                            <h4 class="card-title">{{ nedvig.name }}</h4>
                         </a>
                         <hr class="hr-dark">
-                        <p class="card-text text-dark mb-2"> Тип объекта: '</p>
-                        <p class="card-text text-dark mb-2"> Количество комнат: </p>
-                        <p class="card-text text-dark mb-2"> Этаж/Этажность: </p>
-                        <p class="card-text text-dark mb-2"> Площадь: </p>
-                        <p class="card-text text-dark mb-2"> Материал: </p>
+                        <p class="card-text text-dark mb-2"> Тип объекта: {{ nedvig.type_nedvig }}</p>
+                        <p class="card-text text-dark mb-2"> Количество комнат: {{ nedvig.komnat }}</p>
+                        <p class="card-text text-dark mb-2"> Этаж/Этажность: {{ nedvig.etag }}/{{ nedvig.etagnost }}</p>
+                        <p class="card-text text-dark mb-2"> Площадь: {{ nedvig.obshaya_ploshad }}кв. м</p>
+                        <p class="card-text text-dark mb-2"> Материал: {{ nedvig.material }}</p>
                         <span class="float-left">
-                            <h4 class="font-weight-bold">1 000 000 ₽</h4>
+                            <h4 class="font-weight-bold">{{ nedvig.price }} ₽</h4>
                         </span>
-                    </div>
-                </a>
-            </div>
+                    </div>   
+                </a>    
+            </div>    
         </div>
+        {% endfor %}
 
-        <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
+        <!-- <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
             <div class="card">
                 <div class="view overlay">
                     <img class="card-img-top rounded-top" src="{% static 'images/back.jpg' %}" width="345" height="450"
@@ -162,7 +163,7 @@
                     </span>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 
