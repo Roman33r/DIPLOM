@@ -6,19 +6,19 @@
     <h1 class="text-center">Быстрый поиск недвижимости</h1>
     <div class="row justify-content-center mt-3">
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
-            <select class="form-select" name="" id="" value="Тип услуги">
-                <option value="" selected class="disabled">--Тип услуги--</option>
-                <option value="">Купить</option>
-                <option value="">Снять</option>
+            <select class="form-select" name="type_uslugi" id="" value="Тип услуги">
+                <option value="0" selected>--Тип услуги--</option>
+                {% for usluga in type_uslugi %}
+                <option value="{{ usluga.id }}">{{ usluga.name }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
-            <select class="form-select" name="" id="" value="Тип услуги">
-                <option value="" selected class="disabled">--Тип недвижимости--</option>
-                <option value="">Квартира</option>
-                <option value="">Дом</option>
-                <option value="">Участок</option>
-                <option value="">Гараж</option>
+            <select class="form-select" name="type_nedvig" id="" value="Тип услуги">
+                <option value="0" selected>--Тип недвижимости--</option>
+                {% for typen in type_nedvig %}
+                <option value="{{ typen.id }}">{{ typen.name }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -26,28 +26,28 @@
         <div class="col col-lg-5 col-md-5 col-sm-6">
             <label class=""> Количество комнат: </label>
             <div class="form-check form-check-inline ms-1">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                <label class="form-check-label" for="inlineCheckbox1">1</label>
+                <input class="form-check-input" type="checkbox" id="check1" name="komant1">
+                <label class="form-check-label" for="check1">1</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                <label class="form-check-label" for="inlineCheckbox2">2</label>
+                <input class="form-check-input" type="checkbox" id="check2" name="komant2">
+                <label class="form-check-label" for="check2">2</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                <label class="form-check-label" for="inlineCheckbox3">3</label>
+                <input class="form-check-input" type="checkbox" id="check3" name="komant3">
+                <label class="form-check-label" for="check3">3</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                <label class="form-check-label" for="inlineCheckbox3">4</label>
+                <input class="form-check-input" type="checkbox" id="check3" name="komant4">
+                <label class="form-check-label" for="check3">4</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                <label class="form-check-label" for="inlineCheckbox3">5+</label>
+                <input class="form-check-input" type="checkbox" id="check5" name="komant5">
+                <label class="form-check-label" for="check5">5+</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
-                <label class="form-check-label" for="inlineCheckbox3">Студия</label>
+                <input class="form-check-input" type="checkbox" id="check6" name="Studia">
+                <label class="form-check-label" for="check6">Студия</label>
             </div>
         </div>
         <div class="col col-lg-5 col-md-5 col-sm-6 d-flex">
@@ -61,19 +61,19 @@
     </div>
     <div class="row justify-content-center mb-3">
         <div class=" col col-lg-5 col-md-5 col-sm-10">
-            <select class="form-select" name="" id="" value="Тип услуги">
-                <option value="" selected class="disabled">--Район--</option>
-                <option value="">Купить</option>
-                <option value="">Снять</option>
+            <select class="form-select" name="district" id="" value="Тип услуги">
+                <option value="0" selected class="disabled">--Район--</option>
+                {% for district in districts %}
+                <option value="{{ district.name }}">{{ district.name }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
-            <select class="form-select" name="" id="" value="Тип услуги">
-                <option value="" selected class="disabled">--Улица--</option>
-                <option value="">Квартира</option>
-                <option value="">Дом</option>
-                <option value="">Участок</option>
-                <option value="">Гараж</option>
+            <select class="form-select" name="street" id="" value="Тип услуги">
+                <option value="0" selected class="disabled">--Улица--</option>
+                {% for street in streets %}
+                <option value="{{ street.name }}">{{ street.name }}</option>
+                {% endfor %}
             </select>
         </div>
     </div>
@@ -90,7 +90,7 @@
             <div class="card">  
                 <a href="{% url 'nedvig_page' nedvig.id%}">
                     <div class="view overlay">
-                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="450" alt="Card image cap">
+                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="380" alt="Card image cap">
                         <a href="">
                             <div class="mask rgba-white-slight"></div>
                         </a>

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-
+<h2 class="mt-3">{{ nedvig.name }}</h2>
+<hr>
+{% for photo in photo_nedvig %}
+    <img src="{{photo.path.url}}" alt="" width="300" height="300">
+{% endfor %}
 {% endblock content %}
