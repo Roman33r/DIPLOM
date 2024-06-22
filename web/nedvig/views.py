@@ -1,20 +1,36 @@
 from django.shortcuts import render
-from .models import Nedvigimost, PhotoNedvig, District, TypeNedvig, TypeUslugi, Street
+from .models import Nedvigimost, PhotoNedvig, District, TypeNedvig, TypeUslugi, Street, Zayavki
 from django.views.generic.base import View
 from django.db.models import Q
+from datetime import datetime
+from django.core.paginator import Paginator
 # Create your views here.
 
-def home(request):
-    return render(request, 'home.html')
+class Home(View):
+    def get(self, request):
+        type_uslug = TypeUslugi.objects.all()
+        context = {'type_uslug':type_uslug}
+        return render(request, 'home.html', context)
+    
+    def post(self, request):
+        print("-"*20)
+        print(request.POST)
+        Zayavka = Zayavki.objects.create(FIO = request.POST.get('FIO'), Phone = request.POST.get('Phone'), type_uslugi = request.POST.get('type_uslugi'))
 
 class Catalog(View):
     def get(self, request):
-        nedvig_list = Nedvigimost.objects.all()
+        nedvig_list = Nedvigimost.objects.filter(publish = True)
+
+        paginator = Paginator(nedvig_list, 9)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
         type_nedvig = TypeNedvig.objects.all()
         type_uslugi = TypeUslugi.objects.all()
         districts    = District.objects.all()
         streets      = Street.objects.all()
-        context = {'nedvig_list': nedvig_list,
+        context = {'page_obj': page_obj,
+                   'nedvig_list': nedvig_list,
                    'type_nedvig': type_nedvig,
                    'type_uslugi': type_uslugi,
                    'districts': districts,
@@ -38,8 +54,9 @@ class Catalog(View):
 
         if prices_end == '':
             prices_end = 99999999    
+    
 
-        nedvig_list = Nedvigimost.objects.filter(Q(type_uslugi = type_uslug) & Q(type_nedvig = type_nedvigg) & Q(street = streets) & Q(district = districts) & Q(price__range=(prices_start,prices_end)))   
+        nedvig_list = Nedvigimost.objects.filter(Q(type_uslugi = type_uslug) | Q(type_nedvig = type_nedvigg) | Q(street = streets) | Q(district = districts) | Q(price__range=(prices_start,prices_end)))   
 
         context = {'nedvig_list': nedvig_list}
         return render(request, 'nedvig/catalog.html', context)
@@ -52,5 +69,25 @@ class NedvigDetailViews(View):
     def get(self, request, pk):
         nedvig = Nedvigimost.objects.get(id=pk)
         photo_nedvig = PhotoNedvig.objects.filter(kod_object = pk)
-        print(photo_nedvig, pk)
-        return render(request, 'nedvig/nedvig_page.html', {'nedvig': nedvig, 'photo_nedvig': photo_nedvig})
+        count_ph = []
+        for i in range(len(photo_nedvig)):
+            count_ph.append(i+1)
+
+        
+
+        price = str(nedvig.price)
+        if len(price) == 6:
+            strp = price[:3] + ' ' + price[3:]     
+        elif len(price) == 7:
+            strp = price[:1] + ' ' + price[1:]
+            strp = strp[:5] + ' ' + strp[5:]
+        elif len(price) == 8: 
+            strp = price[:2] + ' ' + price[2:]
+            strp = strp[:6] + ' ' + strp[6:]
+            strp = strp[:10] + ' ' + strp[10:]   
+        
+
+        nedvig.price = strp
+        nedvig.date_public = nedvig.date_public.strftime('%d.%m.%Y')
+        print(photo_nedvig, count_ph)
+        return render(request, 'nedvig/nedvig_page.html', {'nedvig': nedvig, 'photo_nedvig': photo_nedvig, 'count_ph':count_ph})

@@ -1,9 +1,150 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-<h2 class="mt-3">{{ nedvig.name }}</h2>
-<hr>
-{% for photo in photo_nedvig %}
-    <img src="{{photo.path.url}}" alt="" width="300" height="300">
-{% endfor %}
+
+<hr class="mt-3">
+<div class="row ms-5 me-5">
+    <div class="col-8">
+        <div id="carouselExampleIndicators" class="carousel slide rounded" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 0"></button>
+                {% for i in count_ph %}
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{i}}"
+                    aria-label="Slide {{i}}"></button>
+                {% endfor %}
+            </div>
+            <div class="carousel-inner rounded">
+                <div class="carousel-item active" data-bs-interval="9999999999">
+                    <img src="{{nedvig.main_photo.url}}" class="d-block w-100" width="540" height="650"
+                        alt="Main_Photo_objects">
+                </div>
+                {% for photo in photo_nedvig %}
+                <div class="carousel-item" data-bs-interval="9999999999">
+                    <img src="{{photo.path.url}}" class="d-block w-100 rounded" width="540" height="650"
+                        alt="Photo_objects">
+                </div>
+                {% endfor %}
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-4 ">
+        <h2 class="ms-3 mt-2">{{ nedvig.name }}</h2>
+        <hr>
+        <h3 class="ms-3 mt-3">Характеристики</h3>
+        <h5 class="ms-3 mt-3">Код объекта: {{nedvig.id}}</h5>
+        <h5 class="ms-3 mt-3">Этаж: {{nedvig.etag}}</h5>
+        <h5 class="ms-3 mt-3">Площадь: {{nedvig.obshaya_ploshad}} м²</h5>
+        <h5 class="ms-3 mt-3">Количество комнат: {{nedvig.komnat}}</h5>
+        <h5 class="ms-3 mt-3">Дата публикации: {{nedvig.date_public}}</h5>
+        <h1 class="ms-3 mt-4">{{ nedvig.price }} ₽</h1>
+        <h6 class="mt-3">Если заинтересовались объектом, оставьте заявку или позвоните нам по номеру: <a href="tel:88005553535"><i class="fa fa-phone"></i>8(800)555-35-35</a></h6>
+        <button class="pt-3 pb-3 py-2 btn btn-outline-danger waves-effect" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa fa-file-text"></i> Оставить заявку</button>
+    </div>
+</div>
+
+<div class="row ms-5 mt-5">
+    <div class="col-8">
+        <strong class="text-md-left  font-weight-bold">
+            ОПИСАНИЕ:
+        </strong>
+        <p style="text-align: justify;">{{ nedvig.description }}</p>
+    </div>
+
+
+    <strong class="mt-3 text-md-left  font-weight-bold">
+        ХАРАКТЕРИСТИКИ ОБЪЕКТА
+    </strong>
+    <div class="col-6">
+        <table class="table table-bordered mt-3">
+            <tbody>
+                <tr>
+                    <th scope="row "><b>Тип объекта:</b></th>
+                    <td> {{ nedvig.type_nedvig }} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Населённый пункт:</th>
+                    <td> {{ nedvig.naselenyi_punkt }} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Район:</th>
+                    <td> {{ nedvig.district }} </td>
+                </tr>
+                <tr>
+                    <th scope="row ">Улица:</th>
+                    <td> {{ nedvig.street }} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Номер дома:</th>
+                    <td> {{ nedvig.nomer_doma }} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Материал:</th>
+                    <td> {{ nedvig.material }} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Этаж/Этажность:</th>
+                    <td> {{nedvig.etag}} / {{nedvig.etagnost}} </td>
+                </tr>
+                <tr>
+                    <th scope="row">Количество комнат:</th>
+                    <td> {{ nedvig.komnat }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Площадь:</th>
+                    <td> {{ nedvig.obshaya_ploshad }}/{{ nedvig.gilaya_ploshad }}/{{ nedvig.kuhni_ploshad }} м² </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!--Модальное окно для заявки-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel"><strong class="text-center">Отправка
+                        Заявки</strong></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="was-validated">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <select id="sel" name="Type_Uslugi" class="form-select" required>
+                            <option value="" disabled selected>Тип услуги</option>
+                            <option id="id" value="id">111</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="FIO" id="FIO" class="form-control mb-4" placeholder="ФИО" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" name="Phone" id="Phone" class="form-control mb-4"
+                            placeholder="Номер телефона" required>
+                    </div>
+                    <div class="me-5 mb-2 ms-2">
+                        <input type="checkbox" class="form-check-input" id="defaultRegisterFormNewsletter" required>
+                        <label class="  form-check-label" for="defaultRegisterFormNewsletter">Я, согласен(-а) на
+                            обработку персональных данных </label>
+                    </div>
+                    <button class="btn btn-primary w-100 btn-block mb-3" type="submit">Отправить заявку <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Конец Модального окна для заявки-->
+
 {% endblock content %}

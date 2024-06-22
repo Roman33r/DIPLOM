@@ -40,7 +40,7 @@ class TypeUchastka(models.Model):
 class Hozyain(models.Model):
     FIO = models.CharField(max_length=256, null=False)
     phone = models.CharField(max_length=20, null=False)
-    email = models.EmailField(max_length=512, default=None)
+    email = models.EmailField(max_length=512, default=None, null=True)
 
     def __str__(self):
         return self.FIO
@@ -52,7 +52,7 @@ class Nedvigimost(models.Model):
     street   = models.ForeignKey(Street, on_delete=models.SET)
     type_nedvig = models.ForeignKey(TypeNedvig, on_delete=models.SET)
     type_uslugi = models.ForeignKey(TypeUslugi, on_delete=models.SET)
-    type_uchastka = models.ForeignKey(TypeUchastka, on_delete=models.SET, null=True, default="")
+    type_uchastka = models.ForeignKey(TypeUchastka, on_delete=models.SET, null=True)
     nomer_doma = models.CharField(max_length=10)
     material = models.CharField(max_length=128)
     main_photo = models.ImageField(upload_to="nedvig_photo")
@@ -67,6 +67,7 @@ class Nedvigimost(models.Model):
     date_public = models.DateField(default=date.today)
     description = models.CharField(max_length=1024)
     hozyain = models.ForeignKey(Hozyain, on_delete=models.CASCADE)
+    publish = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name
@@ -88,7 +89,7 @@ class Zayavki(models.Model):
     FIO = models.CharField(max_length=256)
     Phone = models.CharField(max_length=20)
     type_uslugi  = models.ForeignKey(TypeUslugi, on_delete=models.SET)
-    status = models.ForeignKey(Status, on_delete=models.SET)
+    status = models.ForeignKey(Status, on_delete=models.SET, default=1)
 
     def __str__(self):
         return self.FIO

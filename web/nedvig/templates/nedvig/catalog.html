@@ -8,9 +8,8 @@
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
             <select class="form-select" name="type_uslugi" id="" value="Тип услуги">
                 <option value="0" selected>--Тип услуги--</option>
-                {% for usluga in type_uslugi %}
-                <option value="{{ usluga.id }}">{{ usluga.name }}</option>
-                {% endfor %}
+                <option value="4">Купить</option>
+                <option value="1">Снять</option>
             </select>
         </div>
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
@@ -52,10 +51,10 @@
         </div>
         <div class="col col-lg-5 col-md-5 col-sm-6 d-flex">
             <div class="col col-lg-6 col-md-6 col-sm-12">
-                <input type="text" name="Price_start" id="Price_start" class="form-control mb-4" placeholder="Цена от">
+                <input type="number" name="Price_start" id="Price_start" class="form-control mb-4" placeholder="Цена от">
             </div>
             <div class="col col-lg-6 col-md-6 col-sm-12 ms-1">
-                <input type="text" name="Price_end" id="Price_end" class="form-control mb-4" placeholder="Цена до">
+                <input type="number" name="Price_end" id="Price_end" class="form-control mb-4" placeholder="Цена до">
             </div>
         </div>
     </div>
@@ -69,7 +68,7 @@
             </select>
         </div>
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
-            <select class="form-select" name="street" id="" value="Тип услуги">
+            <select class="form-select" name="street" id="" value="Улица">
                 <option value="0" selected class="disabled">--Улица--</option>
                 {% for street in streets %}
                 <option value="{{ street.name }}">{{ street.name }}</option>
@@ -85,7 +84,7 @@
 
 <div class="container mt-5">
     <div class="row">
-        {% for nedvig in nedvig_list %}
+        {% for nedvig in page_obj %}
         <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
             <div class="card">  
                 <a href="{% url 'nedvig_page' nedvig.id%}">
@@ -114,56 +113,61 @@
         </div>
         {% endfor %}
 
-        <!-- <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
-            <div class="card">
-                <div class="view overlay">
-                    <img class="card-img-top rounded-top" src="{% static 'images/back.jpg' %}" width="345" height="450"
-                        alt="Card image cap">
-                    <a href="">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                </div>
-                <div class="card-body rounded-bottom">
-                    <a href="" class="link-object text-decoration-none text-dark">
-                        <h4 class="card-title">Продается 3-комн. квартира. Кольчугино, ул. Добровольского, д. 9</h4>
-                    </a>
-                    <hr class="hr-dark">
-                    <p class="card-text text-dark mb-2"> Тип объекта: '</p>
-                    <p class="card-text text-dark mb-2"> Количество комнат: </p>
-                    <p class="card-text text-dark mb-2"> Этаж/Этажность: </p>
-                    <p class="card-text text-dark mb-2"> Площадь: </p>
-                    <p class="card-text text-dark mb-2"> Материал: </p>
-                    <span class="float-left">
-                        <h4 class="font-weight-bold">1 000 000 ₽</h4>
-                    </span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
-            <div class="card">
-                <div class="view overlay">
-                    <img class="card-img-top rounded-top" src="{% static 'images/back.jpg' %}" width="345" height="450"
-                        alt="Card image cap">
-                    <a href="">
-                        <div class="mask rgba-white-slight"></div>
-                    </a>
-                </div>
-                <div class="card-body rounded-bottom">
-                    <a href="" class="link-object text-decoration-none text-dark">
-                        <h4 class="card-title">Продается 3-комн. квартира. Кольчугино, ул. Добровольского, д. 9</h4>
-                    </a>
-                    <hr class="hr-dark">
-                    <p class="card-text text-dark mb-2"> Тип объекта: '</p>
-                    <p class="card-text text-dark mb-2"> Количество комнат: </p>
-                    <p class="card-text text-dark mb-2"> Этаж/Этажность: </p>
-                    <p class="card-text text-dark mb-2"> Площадь: </p>
-                    <p class="card-text text-dark mb-2"> Материал: </p>
-                    <span class="float-left">
-                        <h4 class="font-weight-bold">1 000 000 ₽</h4>
-                    </span>
-                </div>
-            </div>
-        </div> -->
+        <!-- <?php
+        function clear_string($cl_str)
+        {
+          $cl_str = strip_tags($cl_str);
+          $cl_str = mysqli_real_escape_string($cl_str);
+          $cl_str = trim($cl_str);
+          return $cl_str;
+        }
+          $type_uslugi = $_GET["Type_Uslugi"];
+          $type_nedvig = $_GET["Type_nedvig"];
+          if ($_GET["Raion"]) 
+          {
+            $Raion = $_GET["Raion"];
+          }
+          if ($_GET["Street"]) 
+          {
+            $Street = $_GET["Street"];
+          }
+          $Name_Nedvigimost = $_GET["NameNedvig"];
+          if ($_GET["Kolvo_Komnat"]) 
+          {
+            $check_Kolvo_Komnat = implode(',', $_GET["Kolvo_Komnat"]);
+          }
+          $Price_start =  $_GET["Price_start"];
+          $Price_end =  $_GET["Price_end"];
+          if(!empty($check_Kolvo_Komnat) || !empty($Price_end) || !empty($type_uslugi) || !empty($type_nedvig) || !empty($Raion) || !empty($Name_Nedvigimost))
+          {
+            if(!empty($type_uslugi))
+            {
+              $query_Type_Uslugi = "AND `Type_Uslugi` = $type_uslugi";
+            }
+            if(!empty($type_nedvig))
+            {
+              $query_Type_Nedvigimost = "AND `Type_Nedvigimosti` = $type_nedvig";
+            }
+            if(!empty($Raion))
+            {
+              $query_raion = "AND `Raion` = $Raion";
+            }
+            if(!empty($Street))
+            {
+              $query_street = "AND `Street` = $Street";
+            }
+            if(!empty($check_Kolvo_Komnat))
+            {
+              $query_komnat = "AND `Kolvo_Komnat` IN($check_Kolvo_Komnat)";
+            }
+            if (!empty($Price_end)) 
+            {
+              $query_price = "AND `Stoimost` BETWEEN $Price_start AND $Price_end";
+            }
+            if(!empty($Name_Nedvigimost))
+            {
+              $query_name = "AND `Name_Nedvig` LIKE '%$Name_Nedvigimost%'";
+            } -->
     </div>
 </div>
 
