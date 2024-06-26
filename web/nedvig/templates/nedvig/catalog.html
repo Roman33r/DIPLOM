@@ -51,7 +51,8 @@
         </div>
         <div class="col col-lg-5 col-md-5 col-sm-6 d-flex">
             <div class="col col-lg-6 col-md-6 col-sm-12">
-                <input type="number" name="Price_start" id="Price_start" class="form-control mb-4" placeholder="Цена от">
+                <input type="number" name="Price_start" id="Price_start" class="form-control mb-4"
+                    placeholder="Цена от">
             </div>
             <div class="col col-lg-6 col-md-6 col-sm-12 ms-1">
                 <input type="number" name="Price_end" id="Price_end" class="form-control mb-4" placeholder="Цена до">
@@ -77,7 +78,7 @@
         </div>
     </div>
     <div class="row justify-content-center ms-5 me-5 mb-4">
-            <input type="submit" value="Поиск" class="btn btn-secondary">
+        <input type="submit" value="Поиск" class="btn btn-secondary">
     </div>
 
 </form>
@@ -86,14 +87,15 @@
     <div class="row">
         {% for nedvig in page_obj %}
         <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
-            <div class="card">  
+            <div class="card">
                 <a href="{% url 'nedvig_page' nedvig.id%}">
                     <div class="view overlay">
-                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="380" alt="Card image cap">
+                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="380"
+                            alt="Card image cap">
                         <a href="">
                             <div class="mask rgba-white-slight"></div>
                         </a>
-                    </div> 
+                    </div>
                     <div class="card-body rounded-bottom">
                         <a href="" class="link-object text-decoration-none text-dark">
                             <h4 class="card-title">{{ nedvig.name }}</h4>
@@ -107,68 +109,23 @@
                         <span class="float-left">
                             <h4 class="font-weight-bold">{{ nedvig.price }} ₽</h4>
                         </span>
-                    </div>   
-                </a>    
-            </div>    
+                    </div>
+                </a>
+            </div>
         </div>
         {% endfor %}
-
-        <!-- <?php
-        function clear_string($cl_str)
-        {
-          $cl_str = strip_tags($cl_str);
-          $cl_str = mysqli_real_escape_string($cl_str);
-          $cl_str = trim($cl_str);
-          return $cl_str;
-        }
-          $type_uslugi = $_GET["Type_Uslugi"];
-          $type_nedvig = $_GET["Type_nedvig"];
-          if ($_GET["Raion"]) 
-          {
-            $Raion = $_GET["Raion"];
-          }
-          if ($_GET["Street"]) 
-          {
-            $Street = $_GET["Street"];
-          }
-          $Name_Nedvigimost = $_GET["NameNedvig"];
-          if ($_GET["Kolvo_Komnat"]) 
-          {
-            $check_Kolvo_Komnat = implode(',', $_GET["Kolvo_Komnat"]);
-          }
-          $Price_start =  $_GET["Price_start"];
-          $Price_end =  $_GET["Price_end"];
-          if(!empty($check_Kolvo_Komnat) || !empty($Price_end) || !empty($type_uslugi) || !empty($type_nedvig) || !empty($Raion) || !empty($Name_Nedvigimost))
-          {
-            if(!empty($type_uslugi))
-            {
-              $query_Type_Uslugi = "AND `Type_Uslugi` = $type_uslugi";
-            }
-            if(!empty($type_nedvig))
-            {
-              $query_Type_Nedvigimost = "AND `Type_Nedvigimosti` = $type_nedvig";
-            }
-            if(!empty($Raion))
-            {
-              $query_raion = "AND `Raion` = $Raion";
-            }
-            if(!empty($Street))
-            {
-              $query_street = "AND `Street` = $Street";
-            }
-            if(!empty($check_Kolvo_Komnat))
-            {
-              $query_komnat = "AND `Kolvo_Komnat` IN($check_Kolvo_Komnat)";
-            }
-            if (!empty($Price_end)) 
-            {
-              $query_price = "AND `Stoimost` BETWEEN $Price_start AND $Price_end";
-            }
-            if(!empty($Name_Nedvigimost))
-            {
-              $query_name = "AND `Name_Nedvig` LIKE '%$Name_Nedvigimost%'";
-            } -->
     </div>
+    <ul style="display: inline; list-style: none; text-align: center; margin-left: 50%; font-size: 25px;">
+        {% for page in page_obj.paginator.page_range %}
+        {% if page_obj.number == page %}
+        <li style="display: inline; text-decoration: underline;">{{ page }}</li>
+        {% else %}
+        <li style="display: inline;">
+            <a href="?page={{ page }}" class="text-decoration-none" style="color: rgb(99, 99, 99);">{{ page }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
 </div>
 
 {% endblock content %}

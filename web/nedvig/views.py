@@ -4,6 +4,7 @@ from django.views.generic.base import View
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
 # Create your views here.
 
 class Home(View):
@@ -15,13 +16,16 @@ class Home(View):
     def post(self, request):
         print("-"*20)
         print(request.POST)
-        Zayavka = Zayavki.objects.create(FIO = request.POST.get('FIO'), Phone = request.POST.get('Phone'), type_uslugi = request.POST.get('type_uslugi'))
-
+        tu = TypeUslugi.objects.all().filter(pk=request.POST.get('type_uslugi')).first()
+        print("-"*20)
+        print(tu)
+        Zayavka = Zayavki.objects.create(FIO = request.POST.get('FIO'), Phone = request.POST.get('Phone'), type_uslugi = tu)
+        return reverse_lazy('home')
 class Catalog(View):
     def get(self, request):
         nedvig_list = Nedvigimost.objects.filter(publish = True)
 
-        paginator = Paginator(nedvig_list, 9)
+        paginator = Paginator(nedvig_list, 1)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
 
