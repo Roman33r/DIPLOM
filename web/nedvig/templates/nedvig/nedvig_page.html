@@ -119,12 +119,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="was-validated">
+                <form class="was-validated" method="POST" action="">
                     {% csrf_token %}
                     <div class="mb-3">
                         <select id="sel" name="Type_Uslugi" class="form-select" required>
-                            <option value="" disabled selected>Тип услуги</option>
-                            <option id="id" value="id">111</option>
+                            <option value="" disabled selected>--Тип услуги--</option>
+                            {% for usluga in type_uslugi %}
+                            <option value="{{usluga.id}}">{{usluga}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="mb-3">
@@ -135,7 +137,7 @@
                             placeholder="Номер телефона" required>
                     </div>
                     <div class="mb-3">
-                        <label class="">Код объекта: {{nedvig.id}}</label>
+                        <label name="kod_object" value="{{nedvig.id}}">Код объекта: {{nedvig.id}}</label>
                     </div>
                     <div class="me-5 mb-2 ms-2">
                         <input type="checkbox" class="form-check-input" id="defaultRegisterFormNewsletter" required>

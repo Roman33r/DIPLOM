@@ -7,35 +7,59 @@ class TypeUslugi(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Тип услуги'
+        verbose_name_plural = 'Типы услуг'
+
 class NaselenyiPunkt(models.Model):
     name = models.CharField("Наименование", max_length=512, null=False)
 
     def __str__(self):
-        return self.name    
+        return self.name
+
+    class Meta:
+        verbose_name = 'Населенный пункт'
+        verbose_name_plural = 'Населенный пункты'    
 
 class District(models.Model):
     name = models.CharField("Наименование", max_length=512, null=False)
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Район'
+        verbose_name_plural = 'Районы'
 
 class Street(models.Model):
     name = models.CharField("Наименование", max_length=512, null=False)
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Улица'
+        verbose_name_plural = 'Улицы'
 
 class TypeNedvig(models.Model):
     name = models.CharField("Наименование", max_length=512, null=False) 
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Тип недвижимости'
+        verbose_name_plural = 'Типы недвижимости'
 
 class TypeUchastka(models.Model):
     name = models.CharField("Наименование", max_length=512, null=False)
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Тип участка'
+        verbose_name_plural = 'Типы участков'
 
 class Hozyain(models.Model):
     FIO = models.CharField("ФИО", max_length=256)
@@ -44,6 +68,10 @@ class Hozyain(models.Model):
 
     def __str__(self):
         return self.FIO
+    
+    class Meta:
+        verbose_name = 'Владелец'
+        verbose_name_plural = 'Владельцы'
    
 class Nedvigimost(models.Model):
     name = models.CharField("Заголовок", max_length=256)
@@ -73,24 +101,41 @@ class Nedvigimost(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = 'Недвижимость'
+        verbose_name_plural = 'Недвижимость'
+
 class PhotoNedvig(models.Model):
     path = models.ImageField("Путь к файлу", upload_to="nedvig_photo", blank=False)
     kod_object = models.ForeignKey(Nedvigimost, verbose_name="Код объекта", on_delete=models.SET, blank=False)
 
     def __str__(self):
         return str(self.path) 
+    
+    class Meta:
+        verbose_name = 'Фото недвижимости'
+        verbose_name_plural = 'Фото недвижимости'
 
 class Status(models.Model):
     name = models.CharField("Наименование", max_length=56)
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'Статус заявки'
+        verbose_name_plural = 'Статусы заявок'
 
 class Zayavki(models.Model):
     FIO = models.CharField("ФИО", max_length=256)
     Phone = models.CharField("Телефон", max_length=20)
     type_uslugi  = models.ForeignKey(TypeUslugi, verbose_name="Тип услуги", on_delete=models.SET)
     status = models.ForeignKey(Status, verbose_name="Статус заявки", on_delete=models.SET, default=1)
+    kod_object = models.ForeignKey(Nedvigimost, verbose_name="Код объекта", on_delete=models.SET, blank=True, default=None, null=True)
 
     def __str__(self):
         return self.FIO
+    
+    class Meta:
+        verbose_name = 'Заявка'
+        verbose_name_plural = 'Заявки'

@@ -24,7 +24,7 @@
         <h2 class="text-secondary text-secondary">Более 5 лет успешной работы на рынке недвижимости!</h2>
         <hr class="text-secondary">
         <h4 class="text-secondary">Поможем купить, продать, снять, сдать недвижимость. Всю основную часть сделки берем
-            на себя, Вам остается только взять с собой хорошее настроение!</h4>
+            на себя, Вам остается, только, взять с собой хорошее настроение!</h4>
     </div>
 
     <hr class="text-secondary mb-5">
@@ -122,7 +122,7 @@
                 <form class="was-validated" method="POST">
                     {% csrf_token %}
                     <div class="mb-3">
-                        <select class="form-select" name="type_uslugi" value="Тип услуги">
+                        <select id="sel" name="Type_Uslugi" class="form-select" required>
                             <option value="" disabled selected>--Тип услуги--</option>
                             {% for usluga in type_uslug %}
                             <option value="{{usluga.id}}">{{usluga}}</option>

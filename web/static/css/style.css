@@ -17,3 +17,8 @@ footer a{
 .bg_card1{
     background-color: #f0f0f0dc;
 }
+
+
+.title:hover{
+    text-decoration: underline;
+}

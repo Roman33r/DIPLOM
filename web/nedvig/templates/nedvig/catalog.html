@@ -8,8 +8,8 @@
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
             <select class="form-select" name="type_uslugi" id="" value="Тип услуги">
                 <option value="0" selected>--Тип услуги--</option>
-                <option value="4">Купить</option>
-                <option value="1">Снять</option>
+                <option value="1">Купить</option>
+                <option value="4">Снять</option>
             </select>
         </div>
         <div class="mb-3 col col-lg-5 col-md-5 col-sm-10">
@@ -64,7 +64,7 @@
             <select class="form-select" name="district" id="" value="Тип услуги">
                 <option value="0" selected class="disabled">--Район--</option>
                 {% for district in districts %}
-                <option value="{{ district.name }}">{{ district.name }}</option>
+                <option value="{{ district.id }}">{{ district.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -72,7 +72,7 @@
             <select class="form-select" name="street" id="" value="Улица">
                 <option value="0" selected class="disabled">--Улица--</option>
                 {% for street in streets %}
-                <option value="{{ street.name }}">{{ street.name }}</option>
+                <option value="{{ street.id }}">{{ street.name }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -83,22 +83,24 @@
 
 </form>
 
-<div class="container mt-5">
+<div class="container mt-5 ">
     <div class="row">
         {% for nedvig in page_obj %}
+
+        {% if nedvig.id in short %}
         <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
             <div class="card">
                 <a href="{% url 'nedvig_page' nedvig.id%}">
                     <div class="view overlay">
                         <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="380"
                             alt="Card image cap">
-                        <a href="">
+                        <a href="{% url 'nedvig_page' nedvig.id%}">
                             <div class="mask rgba-white-slight"></div>
                         </a>
                     </div>
                     <div class="card-body rounded-bottom">
                         <a href="" class="link-object text-decoration-none text-dark">
-                            <h4 class="card-title">{{ nedvig.name }}</h4>
+                            <h4 class="card-title title" style="padding-top: 13px; padding-bottom: 13px;">{{ nedvig.name }}</h4>
                         </a>
                         <hr class="hr-dark">
                         <p class="card-text text-dark mb-2"> Тип объекта: {{ nedvig.type_nedvig }}</p>
@@ -113,19 +115,51 @@
                 </a>
             </div>
         </div>
+        {% else %}
+        <div class="col-md-6 col-lg-4 col-sm-10 mt-4">
+            <div class="card">
+                <a href="{% url 'nedvig_page' nedvig.id%}">
+                    <div class="view overlay">
+                        <img class="card-img-top rounded-top" src="{{nedvig.main_photo.url}}" width="345" height="380"
+                            alt="Card image cap">
+                        <a href="{% url 'nedvig_page' nedvig.id%}">
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                    <div class="card-body rounded-bottom">
+                        <a href="" class="link-object text-decoration-none text-dark">
+                            <h4 class="card-title title">{{ nedvig.name }}</h4>
+                        </a>
+                        <hr class="hr-dark">
+                        <p class="card-text text-dark mb-2"> Тип объекта: {{ nedvig.type_nedvig }}</p>
+                        <p class="card-text text-dark mb-2"> Количество комнат: {{ nedvig.komnat }}</p>
+                        <p class="card-text text-dark mb-2"> Этаж/Этажность: {{ nedvig.etag }}/{{ nedvig.etagnost }}</p>
+                        <p class="card-text text-dark mb-2"> Площадь: {{ nedvig.obshaya_ploshad }}кв. м</p>
+                        <p class="card-text text-dark mb-2"> Материал: {{ nedvig.material }}</p>
+                        <span class="float-left">
+                            <h4 class="font-weight-bold">{{ nedvig.price }} ₽</h4>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endif %}
         {% endfor %}
     </div>
+
+    {% if  page_obj.has_other_pages %}
     <ul style="display: inline; list-style: none; text-align: center; margin-left: 50%; font-size: 25px;">
         {% for page in page_obj.paginator.page_range %}
         {% if page_obj.number == page %}
         <li style="display: inline; text-decoration: underline;">{{ page }}</li>
-        {% else %}
+        {% elif page >= page_obj.number|add:-2 and page <= page_obj.number|add:2 %}
         <li style="display: inline;">
             <a href="?page={{ page }}" class="text-decoration-none" style="color: rgb(99, 99, 99);">{{ page }}</a>
         </li>
         {% endif %}
         {% endfor %}
     </ul>
+    {% endif %}
 </div>
 
 {% endblock content %}
