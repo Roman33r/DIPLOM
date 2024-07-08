@@ -26,13 +26,13 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&$d&zs3^2k-f=h308&3_3hu1r#lz)37=+!b&^lw4vu=*#bvkz0'
-
+# SECRET_KEY = 'django-insecure-&$d&zs3^2k-f=h308&3_3hu1r#lz)37=+!b&^lw4vu=*#bvkz0'
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
-ALLOWED_HOSTS = ["0.0.0.0","127.0.0.1","localhost"]
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS')
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
