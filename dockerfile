@@ -14,4 +14,4 @@ RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT [ "app/entrypoint.sh" ]
 
-CMD ["gunicorn", "todo_list.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "agent_nedvig.wsgi:application", "--bind", "0.0.0.0:8000"]

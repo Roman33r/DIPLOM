@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if ["$DATABASE" = "sqlite3"]
+if ["$DATABASE" = "postrgress"]
 then
     echo "Waiting for postgress..."
 
@@ -8,7 +8,7 @@ then
         sleep 0.1
     done
 
-    echo "SQLite3 started"
+    echo "PostgreSQL started"
 fi
 
 python manage.py flush --noinput
